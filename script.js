@@ -1,16 +1,24 @@
 const Gameboard = (() => {
-    const grid = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'x', 'o'];
+    const grid = Array(9).fill('');
 
-    const getSquare = () => {
-        //pass
+    const getSquare = (i) => {
+        if (i > 8 || i < 0) {
+            return 'Invalid index';
+        }
+        return grid[i];
     }
 
     const setSquare =() => {
-        //pass
+        if (i > 8 || i < 0) {
+            return 'Invalid index';
+        }
+        grid[i] = sign;
     }
 
     const reset = () => {
-        //pass
+        for (let i = 0; i < 9; i++) {
+            grid[i] = '';
+        }
     }
 
     return {getSquare, setSquare, reset};
