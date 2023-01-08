@@ -25,7 +25,36 @@ const Gameboard = (() => {
 })();
 
 const displayController = (() => {
-    
+
+    //add event handlers
+    const drawBoard = () => {
+        const board = document.querySelector('#board');
+        for (let i = 0; i < 9; i++) {
+            const square = document.createElement('div');
+            square.classList.add('square');
+            square.setAttribute('id', i);
+            board.appendChild(square);
+            }
+    }
+
+    const squareClick = () => {
+        const squares = document.querySelectorAll('.square');
+        squares.forEach((square) => {
+            square.addEventListener('click', (e) => {
+                //pass
+            });
+        }
+    }
+
+    const updateGameboard = () => {
+        for (let i = 0; i < 9; i++) {
+            const square = document.querySelector(`#${i}`);
+            square.textContent = Gameboard.getSquare(i);
+        }
+    }
+
+
+
     const drawSign = () => {
         //pass
     }
