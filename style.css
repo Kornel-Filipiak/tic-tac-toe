@@ -1,0 +1,140 @@
+:root {
+--font-color: #3F72AF;
+--header-font-color: #DBE2EF;
+--square-background-color: #F9F7F7;
+--square-background-color-hover: #F9F7F7;
+--border-color: #112D4E;
+--accent-border-color: #112D4E;
+}
+
+*,
+*::after,
+*::before {
+box-sizing: border-box;
+padding: 0;
+margin: 0;
+}
+
+html {
+position: relative;
+min-height: 100%;
+}
+
+body {
+background-color: #DBE2EF;
+color: var(--font-color);
+font-family: 'Roboto', Verdana, Geneva, Tahoma, sans-serif;
+line-height: 1.6;
+margin-bottom: 80px;
+}
+
+h1 {
+line-height: 1.2;
+}
+
+button {
+border: none;
+color: inherit;
+font-family: inherit;
+font-size: inherit;
+cursor: pointer;
+outline: none;
+}
+
+/*------------------------------ header ------------------------------*/
+
+.header {
+padding: 20px;
+border-bottom: 3px solid var(--accent-border-color);
+background-color: #3F72AF;
+color: var(--header-font-color);
+}
+
+.title {
+font-size: 100px;
+text-align: center;
+}
+
+/*------------------------------ footer ------------------------------*/
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    }
+    
+    .fa-github {
+    color: var(--font-color);
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+    }
+    
+    .fa-github:hover {
+    transform: rotate(360deg) scale(1.2);
+    }
+
+/*------------------------------ main ------------------------------*/
+
+.main {
+padding: 0 20px;
+}
+
+.message {
+padding: 20px 0;
+font-size: 50px;
+text-align: center;
+}
+
+.gameboard {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+width: 454px;
+height: 454px;
+border: 2px solid var(--border-color);
+margin: 0px auto;
+}
+
+.square {
+width: 150px;
+height: 150px;
+border: 1px solid var(--border-color);
+background-color: var(--square-background-color);
+font-size: 100px;
+text-align: center;
+cursor: pointer;
+user-select: none;
+}
+
+.square:hover {
+background-color: var(--square-background-color-hover);
+}
+
+.center {
+display: flex;
+justify-content: center;
+padding: 30px;
+}
+
+.restart-button {
+padding: 10px 20px;
+border: 3px solid var(--accent-border-color);
+border-radius: 7px;
+background-color: #3F72AF;
+color: var(--header-font-color);
+font-size: 50px;
+}
+
+.restart-button:hover {
+background-color: #4071ac;
+}
+
+.restart-button:active {
+background-color: #446b9b;
+}
