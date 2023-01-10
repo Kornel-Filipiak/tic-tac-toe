@@ -1,3 +1,11 @@
+const Player = (name, sign) => {
+    this.name = name;
+    this.sign = sign;
+    const getSign = () => {
+        return sign;
+    }
+}
+
 const Gameboard = (() => {
     const grid = Array(9).fill('');
 
@@ -26,50 +34,47 @@ const Gameboard = (() => {
 
 const displayController = (() => {
 
-    //add event handlers
-    const drawBoard = () => {
-        const board = document.querySelector('#board');
-        for (let i = 0; i < 9; i++) {
-            const square = document.createElement('div');
-            square.classList.add('square');
-            square.setAttribute('id', i);
-            board.appendChild(square);
-            }
+
+    const squareElement = document.querySelectorAll('.square');
+    const resetButton = document.querySelector('#reset');
+
+    const squareClick = (e) => {
+        if(gameController.gameOver() || e.target.textContent !== '') {
+            return;
+        }
+        gameController.playGame(e.target.id);
+        updateGameboard();
     }
 
-    const squareClick = () => {
-        const squares = document.querySelectorAll('.square');
-        squares.forEach((square) => {
-            square.addEventListener('click', (e) => {
-                if (gameController.gameOver()) {
-                    return;
-                }
-                gameController.playGame(e.target.id);
-            });
-        });
+    const resetClick = (e) => {
+        Gameboard.reset();
+        gameController.restart();
+        updateGameboard();
+        updateMessage('Player 1\'s turn');
     }
 
+    resetButton.addEventListener('click', resetClick);
+    squareElement.forEach(square => {
+        square.addEventListener('click', squareClick);
+    });
+
+    //issues to resolve here
     const updateGameboard = () => {
         for (let i = 0; i < 9; i++) {
-            const square = document.querySelector(`#${i}`);
+            const square = document.querySelector(`.square${i}`);
             square.textContent = Gameboard.getSquare(i);
         }
     }
+
 
     const updateMessage = (message) => {
         const messageElement = document.querySelector('#message');
         messageElement.textContent = message;
     }
 
-    const resetButton = () => {
-        Gameboard.reset();
-        gameController.restart();
-        updateGameboard();
-        updateMessage('');
-    }
-    
-    return {drawBoard, squareClick, updateGameboard, updateMessage, resetButton};
+    return {squareClick, updateGameboard, updateMessage, resetButton};
 })();
+
 
 const gameController = (() => {
     const Player1 = Player('Player 1', 'X');
@@ -132,13 +137,6 @@ const gameController = (() => {
         round = 0;
         isOver = false;
     }
+
+    return {playGame, gameOver, restart};
 })();
-
-const Player = (name, sign) => {
-    this.name = name;
-    this.sign = sign;
-    const getSign = () => {
-        return sign;
-    }
-}
-
