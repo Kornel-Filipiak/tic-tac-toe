@@ -52,7 +52,7 @@ const displayController = (() => {
         updateGameboard();
     }
 
-    const resetClick = (e) => {
+    const resetClick = () => {
         Gameboard.reset();
         gameController.restart();
         updateGameboard();
@@ -93,7 +93,7 @@ const gameController = (() => {
 
         Gameboard.setSquare(squareIndex, currentPlayer.getSign());
         if(checkWin(squareIndex)) {
-            displayController.updateMessage(`${currentPlayer.name} wins!`);
+            displayController.updateMessage(`${currentPlayer.getName()} wins!`);
             isOver = true;
             return;
         }
@@ -103,7 +103,7 @@ const gameController = (() => {
             return;
         }
         currentPlayer = currentPlayer === Player1 ? Player2 : Player1;
-        displayController.updateMessage(`${currentPlayer.name}'s turn`);
+        displayController.updateMessage(`${currentPlayer.getName()}'s turn`);
         round++;
     }
 
