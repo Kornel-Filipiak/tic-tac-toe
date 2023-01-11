@@ -4,6 +4,12 @@ const Player = (name, sign) => {
     const getSign = () => {
         return sign;
     }
+
+    const getName = () => {
+        return name;
+    }
+
+    return {getSign, getName};
 }
 
 const Gameboard = (() => {
@@ -16,7 +22,7 @@ const Gameboard = (() => {
         return grid[i];
     }
 
-    const setSquare =() => {
+    const setSquare =(i, sign) => {
         if (i > 8 || i < 0) {
             return 'Invalid index';
         }
@@ -42,7 +48,7 @@ const displayController = (() => {
         if(gameController.gameOver() || e.target.textContent !== '') {
             return;
         }
-        gameController.playGame(e.target.id);
+        gameController.playGame(parseInt(e.target.dataset.index));
         updateGameboard();
     }
 
@@ -54,15 +60,15 @@ const displayController = (() => {
     }
 
     resetButton.addEventListener('click', resetClick);
+
     squareElement.forEach(square => {
         square.addEventListener('click', squareClick);
     });
 
-    //issues to resolve here
+    
     const updateGameboard = () => {
         for (let i = 0; i < 9; i++) {
-            const square = document.querySelector(`.square${i}`);
-            square.textContent = Gameboard.getSquare(i);
+            squareElement[i].textContent = Gameboard.getSquare(i);
         }
     }
 
@@ -84,26 +90,21 @@ const gameController = (() => {
     let isOver = false;
     
     const playGame = (squareIndex) => {
-        if (isOver) {
+
+        Gameboard.setSquare(squareIndex, currentPlayer.getSign());
+        if(checkWin(squareIndex)) {
+            displayController.updateMessage(`${currentPlayer.name} wins!`);
+            isOver = true;
             return;
         }
-        if (Gameboard.getSquare(squareIndex) === '') {
-            Gameboard.setSquare(squareIndex, currentPlayer.getSign());
-            displayController.updateGameboard();
-            round++;
-            if (checkWin(squareIndex)) {
-                displayController.updateMessage(`${currentPlayer.name} wins!`);
-                isOver = true;
-                return;
-            }
-            if (round === 9) {
-                displayController.updateMessage("Draw!");
-                isOver = true;
-                return;
-            }
-            currentPlayer = currentPlayer === Player1 ? Player2 : Player1;
+        if (round === 8) {
+            displayController.updateMessage("Draw!");
+            isOver = true;
+            return;
         }
-
+        currentPlayer = currentPlayer === Player1 ? Player2 : Player1;
+        displayController.updateMessage(`${currentPlayer.name}'s turn`);
+        round++;
     }
 
     const checkWin = (squareIndex) => {
