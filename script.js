@@ -4,7 +4,6 @@ const Player = (name, sign) => {
     const getSign = () => {
         return sign;
     }
-
     const getName = () => {
         return name;
     }
@@ -12,7 +11,7 @@ const Player = (name, sign) => {
     return {getSign, getName};
 }
 
-const Gameboard = (() => {
+const gameBoard = (() => {
     const grid = Array(9).fill('');
 
     const getSquare = (i) => {
@@ -53,7 +52,6 @@ const displayController = (() => {
     }
 
     const resetClick = () => {
-        Gameboard.reset();
         gameController.restart();
         updateGameboard();
         updateMessage('Player 1\'s turn');
@@ -68,7 +66,7 @@ const displayController = (() => {
     
     const updateGameboard = () => {
         for (let i = 0; i < 9; i++) {
-            squareElement[i].textContent = Gameboard.getSquare(i);
+            squareElement[i].textContent = gameBoard.getSquare(i);
         }
     }
 
@@ -91,7 +89,7 @@ const gameController = (() => {
     
     const playGame = (squareIndex) => {
 
-        Gameboard.setSquare(squareIndex, currentPlayer.getSign());
+        gameBoard.setSquare(squareIndex, currentPlayer.getSign());
         if(checkWin(squareIndex)) {
             displayController.updateMessage(`${currentPlayer.getName()} wins!`);
             isOver = true;
@@ -121,7 +119,7 @@ const gameController = (() => {
 
         for (let i = 0; i < winConditions.length; i++) {
             if (winConditions[i].includes(squareIndex)) {
-                if (Gameboard.getSquare(winConditions[i][0]) === Gameboard.getSquare(winConditions[i][1]) && Gameboard.getSquare(winConditions[i][1]) === Gameboard.getSquare(winConditions[i][2])) {
+                if (gameBoard.getSquare(winConditions[i][0]) === gameBoard.getSquare(winConditions[i][1]) && gameBoard.getSquare(winConditions[i][1]) === gameBoard.getSquare(winConditions[i][2])) {
                     return true;
                 }
             }
@@ -133,8 +131,8 @@ const gameController = (() => {
     }
 
     const restart = () => {
-        Gameboard.reset();
-        displayController.updateGameboard();
+        gameBoard.reset();
+        currentPlayer = Player1;
         round = 0;
         isOver = false;
     }
